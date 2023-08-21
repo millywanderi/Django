@@ -1,1 +1,15 @@
 <h1>Welcome to my content</h1>
+<!DOCTYPE html>
+<html>
+    <div>
+        {% for post in posts %}
+        <a href="{% url 'details' post.pk %}">
+        <p>{{post.title}}</p>
+        </a>
+        <p>{{post.name.username}}</p>
+        <p>{{post.date_of_post}}</p>
+        <img src="{{ post.image.url }}" height="400" width="600">
+        <p>{{post.description}}</p>
+        {% endfor %}
+    </div>
+</html>
