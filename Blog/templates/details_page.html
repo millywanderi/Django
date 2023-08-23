@@ -1,3 +1,5 @@
+{% extends "layout.html" %}
+{% block Homepage %}
 <h1>Details Page</h1>
 <div>
     
@@ -9,3 +11,30 @@
         <p>{{post.post}}</p>
        
 </div>
+<div>
+        <hr>
+        <br>
+        {% for comment in comments %}
+        <div>
+                <h6>{{ comment.user.username }} {{ comment.date_of_comment }}</h6>
+                <p>{{ comment.comment }}</p>
+        </div>
+
+        {% endfor %}
+</div>
+<div>
+        <div>
+                <form action = "{% url 'comment' pk=post.pk %}" method = "post">
+                        {% csrf_token %}
+                        <textarea name="comment">
+                        </textarea>
+                        <label>message</label>
+        </div>
+        {% if user.is_authenticated %}
+        <button class="btn btn-success" type="submit">comment</button>
+        {% else %}
+        <a href="{% url 'register' %}">register</a>
+        <button class="btn btn-success" type="submit" disabled>comment</button>
+        {% endif %}
+</div>
+{% endblock %}

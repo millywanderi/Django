@@ -1,3 +1,5 @@
+{% extends "layout.html" %}
+{% block Homepage %}
 <h1>{{cat}}</h1>
 <div>
     {% for post in posts %}
@@ -9,3 +11,4 @@
         <p>{{post.post}}</p>
     {% endfor %} 
 </div>
+{% endblock%}

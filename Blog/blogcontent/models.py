@@ -21,4 +21,11 @@ class Blog(models.Model):
     def __str__(self):
         return f'{self.title} {self.date_of_post}'
     
-    
+class Comment(models.Model):
+    comment = models.TextField(max_length = 200)
+    date_of_comment = models.DateField(auto_now_add = True)
+    user = models.ForeignKey(User, on_delete = models.PROTECT)
+    post_comment = models.ForeignKey(Blog, on_delete = models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user.username} {self.post_comment}'
