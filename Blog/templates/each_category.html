@@ -1,0 +1,11 @@
+<h1>{{cat}}</h1>
+<div>
+    {% for post in posts %}
+        <p>{{post.name.username}}</p>
+        <p>{{post.date_of_post}}</p>
+        <p>{{post.title}}</p>
+        <img src="{{ post.image.url }}" height="400" width="600">
+        <p>{{post.description}}</p>
+        <p>{{post.post}}</p>
+    {% endfor %} 
+</div>
