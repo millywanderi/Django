@@ -6,5 +6,6 @@ urlpatterns = [
         path("details/<int:pk>", views.details_page, name = "details"),
         path("categories", views.all_categories, name="categories"),
         path("category/<str:category>", views.each_category, name="each_category"),
-        path("comment/<int:pk>", views.comment, name = "comment"),
+        path("comment/<int:pk>", views.comment, name="comment"),
+        path("review/<int:pk>", views.review, name="review")
         ]
