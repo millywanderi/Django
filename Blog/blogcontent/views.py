@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
-from .models import Blog, Comment, Review
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Blog, Comment, Review, Like
 from .models import Category
-from .forms import CommentForm
+from .forms import CommentForm, EditPostForm
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.contrib import messages
 
 def postcontent(request):
 
@@ -14,9 +17,13 @@ def postcontent(request):
 def details_page(request, pk):
     post = Blog.objects.get(pk = pk)
     comments = Comment.objects.filter(post_comment = pk)
+    likes = Like.objects.filter(post=post)
+    print()
+    print(likes)
     context = {
         "post": post,
         "comments": comments,
+        "likes" : likes,
     }
     return render(request, "details_page.html", context)
 
@@ -82,3 +89,38 @@ def review(request, pk):
         "all_reviews" : all_reviews,
                 }
     return render(request, "review.html", context)
+
+def postLike(request, pk):
+    
+    post = get_object_or_404(Blog, pk=pk)
+    like, created = Like.objects.get_or_create(post = post,
+                                               user = request.user
+                                               )
+    if created or not like.liked:
+        like.liked = True
+        like.likes += 1
+    else:
+        like.liked = False
+        like.likes -= 1
+
+    like.save()
+
+    return HttpResponseRedirect(reverse("details", args=(post.pk,)))
+
+def editPost(request, pk):
+
+    post = Blog.objects.get(pk=pk)
+    if request.method == "POST":
+        editForm = EditPostForm(request.POST, request.FILES, instance=post)
+        if editForm.is_valid():
+            editForm.save()
+            messages.success(request, f'Your changes have been saved')
+            return redirect("editpost", pk=pk)
+    else:
+        editForm = EditPostForm(instance=post)
+    context = {
+        'editForm' : editForm,
+        'post' : post
+    }
+
+    return render(request, "editPost.html", context)

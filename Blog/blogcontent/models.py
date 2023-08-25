@@ -17,12 +17,22 @@ class Blog(models.Model):
     description = models.TextField(max_length=200)
     image = models.ImageField(upload_to="images")
     category = models.ForeignKey(Category, default=1, on_delete=models.CASCADE)
-    post_likes = models.ManyToManyField(User, blank=True, related_name="Like")
-    # liked = models.BooleanField(default=False)
+
 
     def __str__(self):
         return f'{self.title} {self.date_of_post}'
     
+class Like(models.Model):
+    post = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    likes = models.IntegerField(default=0)
+    liked = models.BooleanField(default=False)
+
+    varbose_name_plural = "Likes"
+
+    def __str__(self):
+        return f'total likes for {self.post.title} {self.likes}'
+
 class Comment(models.Model):
     comment = models.TextField(max_length = 200)
     date_of_comment = models.DateField(auto_now_add = True)

@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block Homepage %}
+<div>
+    <form action="{% url 'editpost' pk=post.pk %}" method="POST"
+    enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ editForm.as_p }}
+        <button class="btn btn-primary" type="submit">Edit</button>
+    </form>
+</div>
+{% endblock %}
