@@ -17,7 +17,7 @@ def postcontent(request):
 def details_page(request, pk):
     post = Blog.objects.get(pk = pk)
     comments = Comment.objects.filter(post_comment = pk)
-    likes = Like.objects.filter(post=post)
+    likes = post.total_likes
     print()
     print(likes)
     context = {
@@ -98,10 +98,10 @@ def postLike(request, pk):
                                                )
     if created or not like.liked:
         like.liked = True
-        like.likes += 1
+        like.likes = 1
     else:
         like.liked = False
-        like.likes -= 1
+        like.likes = 0
 
     like.save()
 

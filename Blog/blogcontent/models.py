@@ -21,7 +21,16 @@ class Blog(models.Model):
 
     def __str__(self):
         return f'{self.title} {self.date_of_post}'
-    
+
+    @property
+    def total_likes(self):   
+        likes = Like.objects.filter(post=self, liked=True)
+        total = 0
+        if likes:
+            for like in likes:
+                total += like.likes
+        return total
+
 class Like(models.Model):
     post = models.ForeignKey(Blog, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.PROTECT)

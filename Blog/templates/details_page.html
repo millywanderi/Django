@@ -18,9 +18,8 @@
                 <form action = "{% url 'like' pk=post.pk %}" method = "post">
                         {% csrf_token %}
                         <button class="btn btn-danger" type="submit">Like</button>
-                        {% for like in likes %}
-                        <p>{{ like.likes }}</p>
-                        {% endfor %}
+                        <p>{{ likes }}</p>
+                
                 </form>
         </div>
         <hr>
