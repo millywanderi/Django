@@ -124,3 +124,26 @@ def editPost(request, pk):
     }
 
     return render(request, "editPost.html", context)
+
+def createPost(request):
+    if request.method == "POST":
+        title = request.POST["title"]
+        post = request.POST["post"]
+        description = request.POST["description"]
+        category = request.POST["category"]
+        name = request.user
+        image = request.FILES
+        category = Category.objects.get(category=category)
+
+        post = Blog.objects.create(
+            title = title,
+            post = post
+            name = name,
+            description = description,
+            image = image,
+            category = category
+        )
+        post.save()
+        messages.success(request, f"Blog created successfully")
+        return redirect("content")
+    return render(request, "newpost.html")
