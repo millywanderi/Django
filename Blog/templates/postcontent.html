@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
 {% block Content %}
 <h1>Welcome to my content</h1>
+<a href="{% url 'createpost' %}"><h5>Create Blog</h5></a>
+<a href="{% url 'register' %}"><h5>Register</h5></a>
+<a href="{% url 'login' %}"><h5>Login</h5></a>
+<a href="{% url 'logout' %}"><h5>Logout</h5></a>
 <div class="row">
     <div class="col-4">
         {% for post in posts %}
