@@ -11,8 +11,18 @@
         <a href="{% url 'details' post.pk %}">
         <p>{{post.title}}</p>
         </a>
-        <p>{{post.name.username}}</p>
-        <p>{{post.date_of_post}}</p>
+        <ul>
+        <li>
+            <p>{{post.name.username}}</p>
+            <p>{{post.date_of_post}}</p>
+        </li>
+        <li>
+            <form action="{% url 'deletepost' pk=post.pk %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </li>
+        </ul>
         <p>{{post.description}}</p>
         {% endfor %}
     </div>

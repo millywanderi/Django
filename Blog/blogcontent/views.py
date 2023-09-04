@@ -137,7 +137,7 @@ def createPost(request):
 
         post = Blog.objects.create(
             title = title,
-            post = post
+            post = post,
             name = name,
             description = description,
             image = image,
@@ -147,3 +147,9 @@ def createPost(request):
         messages.success(request, f"Blog created successfully")
         return redirect("content")
     return render(request, "newpost.html")
+
+def deletePost(request, pk):
+    post = get_object_or_404(Blog, pk=pk)
+    post.delete()
+    return redirect("content")
+    
